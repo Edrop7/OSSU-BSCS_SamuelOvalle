@@ -9,7 +9,15 @@
 
 import random
 
-WORDLIST_FILENAME = "words.txt"
+#fixed this line to read the words database, filepath must be modified to match directory from root
+WORDLIST_FILENAME = "coursepages/intro-cs/MIT_6001/words.txt"
+
+alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+                "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+
+guess_cache = {
+    ""
+}
 
 def loadWords():
     """
@@ -51,7 +59,18 @@ def isWordGuessed(secretWord, lettersGuessed):
       False otherwise
     '''
     # FILL IN YOUR CODE HERE...
-
+    
+    count_letters = 0
+    for i in secretWord:
+        if i in lettersGuessed:
+            count_letters += 1
+    if count_letters == len(secretWord):
+        return True
+    else:
+        return False
+    
+# Test script - my input case
+# print(isWordGuessed("test", ["t", "e", "s", "t", "j", "r"]))
 
 
 def getGuessedWord(secretWord, lettersGuessed):
@@ -63,6 +82,16 @@ def getGuessedWord(secretWord, lettersGuessed):
     '''
     # FILL IN YOUR CODE HERE...
 
+    current_word = []
+    for i in secretWord:
+        if i in lettersGuessed:
+            current_word.append(i)
+        else:
+            current_word.append("_")
+    return ''.join(current_word)
+
+#test script - my input case
+#print(getGuessedWord("attempt", ["a", "t", "r", "o"]))
 
 
 def getAvailableLetters(lettersGuessed):
@@ -72,7 +101,15 @@ def getAvailableLetters(lettersGuessed):
       yet been guessed.
     '''
     # FILL IN YOUR CODE HERE...
+
+    for i in lettersGuessed:
+        if i in alphabet:
+            alphabet.remove(i)
     
+    return "".join(alphabet)
+    
+# test script - my test case
+print(getAvailableLetters(["a", "r", "j", "q", "z"]))
 
 def hangman(secretWord):
     '''
@@ -96,7 +133,37 @@ def hangman(secretWord):
     '''
     # FILL IN YOUR CODE HERE...
 
+    lives = 6
+    lettersGuessed = []
+    alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
+                "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 
+    print(f"The secret word contains {len(secretWord)} letters")
+    print(" ")
+    print(" Initiating hangman game...")
+    print(" ")
+    while(isWordGuessed(secretWord, lettersGuessed) == False):
+      print(" Beginning round. ")
+      print(" ")
+      attempt = input("Please select an alphabetical lowercase letter: ")
+      while attempt not in alphabet:
+          print("error, that is not an acceptable guess, please try again")
+          attempt = input("Please select an alphabetical lowercase letter: ")
+      lettersGuessed.append(attempt)
+      if attempt in secretWord:
+        print(f"Good guess! {getGuessedWord(secretWord, lettersGuessed)}")
+      else:
+          print(f"Sorry, that is not a correct guess {getGuessedWord(secretWord, lettersGuessed)}")
+          lives -= 1
+          print(f"You lose one life. Remaining lives: {lives}")
+      if lives == 0:
+          print("Game lost")
+          break
+      elif isWordGuessed(secretWord, lettersGuessed) == True:
+          print("You won!")
+          break
+      else:
+          print(f"Your remaining available words are {alphabet}")
 
 
 
@@ -106,4 +173,4 @@ def hangman(secretWord):
 # secretWord while you're testing)
 
 # secretWord = chooseWord(wordlist).lower()
-# hangman(secretWord)
+hangman("test")
