@@ -161,6 +161,20 @@ def updateHand(hand, word):
     returns: dictionary (string -> int)
     """
     # TO DO ... <-- Remove this comment when you code this function
+    
+    #Creating a copied dictionary as a valueType rather than a referenceType
+    #https://stackoverflow.com/questions/2465921/how-to-copy-a-dictionary-and-only-edit-the-copy
+    new_hand = hand.copy()
+
+    #this is my code from here on
+    try:
+        for i in word:
+            if i in new_hand and new_hand[i] > 0:
+                new_hand[i] -= 1
+        return new_hand
+    except:
+        print("That is not a valid word, please input a string")
+    
 
 
 
