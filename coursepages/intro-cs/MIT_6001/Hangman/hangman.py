@@ -10,7 +10,7 @@
 import random
 
 #fixed this line to read the words database, filepath must be modified to match directory from root
-WORDLIST_FILENAME = "coursepages/intro-cs/MIT_6001/words.txt"
+WORDLIST_FILENAME = "coursepages/intro-cs/MIT_6001/Hangman/words.txt"
 
 alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p",
                 "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
