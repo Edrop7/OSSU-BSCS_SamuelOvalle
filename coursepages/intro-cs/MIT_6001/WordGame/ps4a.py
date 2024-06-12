@@ -34,6 +34,7 @@ def loadWords():
         wordList.append(line.strip().lower())
     print("  ", len(wordList), "words loaded.")
     return wordList
+wordList = loadWords()
 
 def getFrequencyDict(sequence):
     """
@@ -266,7 +267,7 @@ def playHand(hand, wordList, n):
     while calculateHandlen(hand) != 0:
     
         # Display the hand
-        displayHand()
+        displayHand(hand)
         
         # Ask user for input
         word = input("Please provide a new word or a single period to indicate youre done: ")
@@ -280,7 +281,7 @@ def playHand(hand, wordList, n):
         else:
         
             # If the word is not valid:
-            while isValidWord(word) != True:
+            while isValidWord(word, hand, wordList) != True:
             
                 # Reject invalid word (print a message followed by a blank line)
                 print("This is not a valid word, please pick another one")
@@ -290,14 +291,20 @@ def playHand(hand, wordList, n):
             # Otherwise (the word is valid):
 
                 # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-            print(f"Your word scored {getWordScore(word)} points")
-            score += getWordScore(word)
+            print(f"Your word scored {getWordScore(word, n)} points")
+            score += getWordScore(word, n)
                 # Update the hand 
             hand = updateHand(hand, word)
                 
 
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
     print("Game over")
+    print(f"Your final score is {score}")
+
+#Test Cases for script
+#playHand({'h':1, 'i':1, 'c':1, 'z':1, 'm':2, 'a':1}, wordList, 7)
+#playHand({'w':1, 's':1, 't':2, 'a':1, 'o':1, 'f':1}, wordList, 7)
+#playHand({'n':1, 'e':1, 't':1, 'a':1, 'r':1, 'i':2}, wordList, 7)
 
 #
 # Problem #5: Playing a game
