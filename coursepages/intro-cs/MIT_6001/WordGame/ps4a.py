@@ -193,6 +193,26 @@ def isValidWord(word, hand, wordList):
     wordList: list of lowercase strings
     """
     # TO DO ... <-- Remove this comment when you code this function
+    
+    if word in wordList:
+        new_hand = hand.copy()
+        count = 0
+        
+        for i in word:
+            if i in new_hand:
+                if new_hand[i] > 0:
+                    count += 1
+                    new_hand[i] -= 1
+                else:
+                    return False
+        
+        if count == len(word):
+            return True
+        else:
+            return False
+        
+    else: 
+        return False
 
 
 #
